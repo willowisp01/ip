@@ -39,6 +39,7 @@ public class Luke extends Application {
     //Used this https://se-education.org/guides/tutorials/javaFxPart2.html as the main template!
     @Override
     public void start(Stage stage) throws Exception {
+        //TODO: Move this logic into Storage
         Storage storage;
         UI ui = new UI();
 
@@ -76,6 +77,9 @@ public class Luke extends Application {
             System.out.println("Class not found");
             return;
         }
+
+        //Storage should either be loaded, or newly created if does not exist.
+        assert (storage != null);
 
         Parser parser = new Parser(storage, historyFile);
 
@@ -150,6 +154,7 @@ public class Luke extends Application {
         }
         try {
             lukeReply = parser.parseCommand(formattedInput);
+            assert lukeReply != null; //should be a string
         } catch (TasklistException e) {
             lukeReply = e.getMessage();
         } catch (ParseCommandException e) {
